@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 11 – GEOG 5150/6150</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f0eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #1c1a17;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #d6cec4;
+            padding: 52px 64px;
+            text-align: center;
+            max-width: 520px;
+            width: 90%;
+        }
+        .anim-wrap {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        /* Floating browser window */
+        .browser {
+            width: 160px;
+            border: 2px solid #d6cec4;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 4px 4px 0 #e8e0d6;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-8px); }
+        }
+        .browser-bar {
+            background: #e8e0d6;
+            padding: 6px 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .dot-r { width: 7px; height: 7px; border-radius: 50%; background: #d4a5a5; }
+        .dot-y { width: 7px; height: 7px; border-radius: 50%; background: #d4c9a5; }
+        .dot-g { width: 7px; height: 7px; border-radius: 50%; background: #a5d4b4; }
+        .url-bar {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 3px;
+            height: 10px;
+            margin-left: 4px;
+        }
+        .browser-body {
+            background: #ffffff;
+            padding: 10px 10px 14px;
+        }
+        /* Animated typing lines */
+        .code-line {
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            background: #e8e0d6;
+            transform-origin: left;
+        }
+        .code-line.tag  { background: #c4bbb0; }
+        .code-line.l1   { width: 80%; animation: type 2s ease-out infinite; animation-delay: 0s; }
+        .code-line.l2   { width: 60%; animation: type 2s ease-out infinite; animation-delay: 0.2s; }
+        .code-line.l3   { width: 90%; animation: type 2s ease-out infinite; animation-delay: 0.4s; }
+        .code-line.l4   { width: 50%; animation: type 2s ease-out infinite; animation-delay: 0.6s; }
+        .code-line.l5   { width: 70%; animation: type 2s ease-out infinite; animation-delay: 0.8s; }
+        @keyframes type {
+            0%   { transform: scaleX(0); opacity: 0; }
+            20%  { transform: scaleX(1); opacity: 1; }
+            80%  { transform: scaleX(1); opacity: 1; }
+            100% { transform: scaleX(1); opacity: 0.4; }
+        }
+
+        /* Cursor blinking */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 12px;
+            background: #4a4540;
+            margin-left: 2px;
+            animation: blink 0.8s step-end infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+
+        .label {
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #8c857d;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #1c1a17;
+            margin-bottom: 12px;
+        }
+        .desc {
+            font-size: 13px;
+            font-weight: 300;
+            color: #4a4540;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        .note {
+            font-size: 12px;
+            font-weight: 300;
+            color: #8c857d;
+            font-style: italic;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+        .divider {
+            height: 1px;
+            background: #e8e0d6;
+            margin-bottom: 28px;
+        }
+        a.back {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #4a4540;
+            border-bottom: 1px solid #d6cec4;
+            padding-bottom: 2px;
+            text-decoration: none;
+        }
+        a.back:hover { color: #1c1a17; border-color: #1c1a17; }
+    </style>
+</head>
+<body>
+    <div class="card">
+
+        <!-- Animated browser with typing code -->
+        <div class="anim-wrap">
+            <div class="browser">
+                <div class="browser-bar">
+                    <div class="dot-r"></div>
+                    <div class="dot-y"></div>
+                    <div class="dot-g"></div>
+                    <div class="url-bar"></div>
+                </div>
+                <div class="browser-body">
+                    <div class="code-line tag l1"></div>
+                    <div class="code-line l2"></div>
+                    <div class="code-line tag l3"></div>
+                    <div class="code-line l4"></div>
+                    <div class="code-line l5"></div>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="label">GEOG 5150/6150 &nbsp;·&nbsp; Lab 11</div>
+        <h1>Introduction to HTML</h1>
+
+        <p class="desc">
+            This was my very first lab — where it all began.<br>
+            I built a webpage from scratch using HTML, learning the fundamental structure and tags that make the web work.
+        </p>
+        
+        <div class="divider"></div>
+        <a href="index hizettesergius.html" class="back">&larr; Back to Home</a>
+
+    </div>
+</body>
+</html>
